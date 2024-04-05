@@ -1,4 +1,4 @@
-import express, { Request, Response, response } from "express";
+import express, { Request, Response } from "express";
 
 const app = express();
 const PORT = 3000;
@@ -9,18 +9,18 @@ app.use(express.json());
 type Person = { id: number; firstName: string; lastName: string };
 
 // Mimicking a database with an array
-let person: Person[] = [];
+let persons: Person[] = [];
 
 // GET request to fetch all persons
 app.get("/person", (request: Request, response: Response) => {
-  response.status(200).send(person);
+  response.status(200).send(persons);
 });
 
 // GET request to fetch person details by ID
 app.get("/person/:id", (request: Request, response: Response) => {
   const { id } = request.params;
 
-  const matchedPerson = person.find((person) => person.id === parseInt(id));
+  const matchedPerson = persons.find((person) => person.id === parseInt(id));
 
   if (matchedPerson) {
     response.status(200).send(matchedPerson);
@@ -44,8 +44,8 @@ app.post("/person/:id", (request: Request, response: Response) => {
     });
   }
 
-  const newPerson: Person = { id: person.length + 1, firstName, lastName };
-  person.push(newPerson);
+  const newPerson: Person = { id: persons.length + 1, firstName, lastName };
+  persons.push(newPerson);
 
   response.status(200).send({
     firstName: `firstName of ${firstName} added`,
@@ -59,16 +59,35 @@ app.put("/person/:id", (request: Request, response: Response) => {
 
   const { firstName, lastName } = request.body;
 
-  const personIndex = person.findIndex((person) => person.id === parseInt(id));
+  const personIndex = persons.findIndex((person) => person.id === parseInt(id));
 
   if (personIndex !== -1) {
     if (firstName) {
-      person[personIndex].firstName = firstName;
+      persons[personIndex].firstName = firstName;
     }
     if (lastName) {
-      person[personIndex].lastName = lastName;
+      persons[personIndex].lastName = lastName;
     }
-    response.status(200).send(person[personIndex]);
+    response.status(200).send(persons[personIndex]);
+  } else {
+    response.status(404).send({ message: "Person not found" });
+  }
+});
+
+// DELETE request to delete person by ID
+app.delete("/person/:id", (request: Request, response: Response) => {
+  const { id } = request.params;
+
+  const deletePersonIndex = persons.findIndex(
+    (person) => person.id === parseInt(id)
+  );
+
+  if (deletePersonIndex !== -1) {
+    // Remove the person from the array using splice
+    persons.splice(deletePersonIndex, 1);
+    response
+      .status(200)
+      .send({ message: `Successfully deleted person with ID ${id}` });
   } else {
     response.status(404).send({ message: "Person not found" });
   }
