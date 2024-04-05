@@ -11,13 +11,17 @@ type Person = { id: number; firstName: string; lastName: string };
 // Mimicking a database with an array
 let persons: Person[] = [];
 
+const router = express.Router();
+
+app.use("/api", router);
+
 // GET request to fetch all persons
-app.get("/person", (request: Request, response: Response) => {
+router.get("/person", (request: Request, response: Response) => {
   response.status(200).send(persons);
 });
 
 // GET request to fetch person details by ID
-app.get("/person/:id", (request: Request, response: Response) => {
+router.get("/person/:id", (request: Request, response: Response) => {
   const { id } = request.params;
 
   const matchedPerson = persons.find((person) => person.id === parseInt(id));
@@ -30,7 +34,7 @@ app.get("/person/:id", (request: Request, response: Response) => {
 });
 
 // POST request to create a new person
-app.post("/person/:id", (request: Request, response: Response) => {
+router.post("/person/:id", (request: Request, response: Response) => {
   const { firstName, lastName } = request.body;
   if (!firstName) {
     response.status(418).send({
@@ -54,7 +58,7 @@ app.post("/person/:id", (request: Request, response: Response) => {
 });
 
 // PUT request to update person details by ID
-app.put("/person/:id", (request: Request, response: Response) => {
+router.put("/person/:id", (request: Request, response: Response) => {
   const { id } = request.params;
 
   const { firstName, lastName } = request.body;
@@ -75,7 +79,7 @@ app.put("/person/:id", (request: Request, response: Response) => {
 });
 
 // DELETE request to delete person by ID
-app.delete("/person/:id", (request: Request, response: Response) => {
+router.delete("/person/:id", (request: Request, response: Response) => {
   const { id } = request.params;
 
   const deletePersonIndex = persons.findIndex(
