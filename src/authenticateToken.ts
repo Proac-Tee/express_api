@@ -1,13 +1,16 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+// Secret key for JWT
+const secretKey = process.env.SECRET_KEY || "";
 
 // Define a custom interface extending Request to include the user property
 interface AuthenticatedRequest extends Request {
   user?: any;
 }
-
-// Secret key for JWT
-const secretKey = "your_secret_key";
 
 const authenticateToken = (
   request: AuthenticatedRequest,
