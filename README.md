@@ -105,6 +105,28 @@ Start the server
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of item to fetch |
 
+#### signup user
+
+```http
+  POST /auth/login
+```
+
+| Parameter  | Type     | Description                 |
+| :--------- | :------- | :-------------------------- |
+| `email`    | `string` | **Required**. user email    |
+| `password` | `string` | **Required**. user password |
+
+#### login user
+
+```http
+  POST /auth/signup
+```
+
+| Parameter  | Type     | Description                 |
+| :--------- | :------- | :-------------------------- |
+| `email`    | `string` | **Required**. user email    |
+| `password` | `string` | **Required**. user password |
+
 #### Create a new person
 
 ```http
