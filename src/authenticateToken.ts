@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { JsonWebTokenError } from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -17,24 +17,21 @@ const authenticateToken = (
   response: Response,
   next: NextFunction
 ) => {
-  const token = request.headers["authorization"];
+  const token = request.cookies["expressApiToken"];
 
   if (!token) {
     return response.status(401).json({ message: "Unauthorized Request" });
   }
 
-  // Remove 'Bearer ' from the beginning of the token
-  const tokenValue = token.split(" ")[1];
-
   try {
-    jwt.verify(tokenValue, secretKey, (error, decoded) => {
+    jwt.verify(token, secretKey, (error: Error | null, decoded: unknown) => {
       // Assign the user to the request object
       request.user = decoded;
 
       next();
     });
   } catch (error) {
-    if (error instanceof jwt.JsonWebTokenError) {
+    if (error instanceof JsonWebTokenError) {
       return response.status(403).json({ message: "Request is Forbidden" });
     } else {
       return response

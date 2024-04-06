@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import Person from "../Schema";
+import Person from "../schema/Schema";
 import jwt from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
 import dotenv from "dotenv";
-import { User } from "../UserSchema";
+import User from "../schema/UserSchema";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -12,6 +12,8 @@ dotenv.config();
 const secretKey = process.env.SECRET_KEY || ""; // Access SECRET_KEY from environment variables
 
 const saltRounds = 10;
+
+const maxAge = 14 * 24 * 60 * 60;
 
 /**
  * Controller function to get all persons
@@ -76,13 +78,9 @@ export const signUp = async (request: Request, response: Response) => {
 
   try {
     // Generate JWT token
-    const accessToken = jwt.sign(
-      { email, password: hashedPassword },
-      secretKey,
-      {
-        expiresIn: "1h",
-      }
-    );
+    const accessToken = jwt.sign({ email }, secretKey, {
+      expiresIn: maxAge,
+    });
 
     // Create a new user document
     const newUser = new User({
@@ -96,6 +94,12 @@ export const signUp = async (request: Request, response: Response) => {
     // If user doesn't exist, save the new user to the database
     if (!user) {
       await newUser.save();
+
+      response.cookie("expressApiToken", accessToken, {
+        httpOnly: true,
+        maxAge: maxAge * 1000,
+      });
+
       response.status(200).json({ accessToken });
     } else {
       // If user already exists, respond with 401 status code and error message
@@ -148,7 +152,12 @@ export const login = async (request: Request, response: Response) => {
 
     // If passwords match, generate JWT token
     const accessToken = jwt.sign({ email }, secretKey, {
-      expiresIn: "1h",
+      expiresIn: maxAge,
+    });
+
+    response.cookie("expressApiToken", accessToken, {
+      httpOnly: true,
+      maxAge: maxAge * 1000,
     });
 
     // Respond with 200 status code and JWT token
@@ -158,6 +167,20 @@ export const login = async (request: Request, response: Response) => {
     response
       .status(500)
       .json({ message: "Error saving data to database", error });
+  }
+};
+
+/**
+ * Controller function to logout a user and destroy JWT token session
+ * @param request - Express Request object
+ * @param response - Express Response object
+ */
+export const logOut = async (request: Request, response: Response) => {
+  try {
+    response.cookie("expressApiToken", "", { maxAge: 1 });
+    response.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    response.status(500).json({ message: "Error logging out", error });
   }
 };
 

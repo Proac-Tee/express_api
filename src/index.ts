@@ -2,8 +2,10 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { auth, router } from "./routes/routes"; // Importing routes
+import cookieParser from "cookie-parser";
 
 const app = express();
+app.use(cookieParser());
 const PORT = 3000;
 
 dotenv.config(); // Load environment variables from .env file

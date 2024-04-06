@@ -6,6 +6,7 @@ import {
   deletePerson,
   getAllPerson,
   getIndividualPerson,
+  logOut,
   login,
   signUp,
   updatePerson,
@@ -16,7 +17,7 @@ const router = express.Router();
 const auth = express.Router();
 
 // GET request to fetch all persons
-router.get("/person", authenticateToken, getAllPerson);
+router.get("/person", getAllPerson);
 
 // GET request to fetch person details by ID
 router.get("/person/:id", authenticateToken, getIndividualPerson);
@@ -26,6 +27,9 @@ auth.post("/signup", signUp);
 
 // Generate and return JWT upon successful user login authentication
 auth.post("/login", login);
+
+// Destrot JWT  section upon successful user logout authentication
+auth.get("/logout", logOut);
 
 // POST request to create a new person
 router.post("/person/:id", authenticateToken, addNewPerson);
