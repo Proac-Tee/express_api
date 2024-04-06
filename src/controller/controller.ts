@@ -177,7 +177,15 @@ export const login = async (request: Request, response: Response) => {
  */
 export const logOut = async (request: Request, response: Response) => {
   try {
-    response.cookie("expressApiToken", "", { maxAge: 1 });
+    const cookies = request.cookies;
+
+    if (!cookies?.expressApiToken) return response.sendStatus(204);
+
+    response.clearCookie("expressApiToken", {
+      httpOnly: true,
+      maxAge: maxAge * 1000,
+    });
+
     response.status(200).json({ message: "Logout successful" });
   } catch (error) {
     response.status(500).json({ message: "Error logging out", error });

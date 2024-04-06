@@ -29,7 +29,7 @@ auth.post("/signup", signUp);
 auth.post("/login", login);
 
 // Destrot JWT  section upon successful user logout authentication
-auth.get("/logout", logOut);
+auth.post("/logout", logOut);
 
 // POST request to create a new person
 router.post("/person/:id", authenticateToken, addNewPerson);

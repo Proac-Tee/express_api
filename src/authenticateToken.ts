@@ -17,11 +17,14 @@ const authenticateToken = (
   response: Response,
   next: NextFunction
 ) => {
-  const token = request.cookies["expressApiToken"];
+  const authHeader = request.headers["authorization"];
 
-  if (!token) {
+  if (!authHeader?.startsWith("Bearer")) {
     return response.status(401).json({ message: "Unauthorized Request" });
   }
+
+  // Extract the token from the Authorization header
+  const token = authHeader.split(" ")[1];
 
   try {
     jwt.verify(token, secretKey, (error: Error | null, decoded: unknown) => {
