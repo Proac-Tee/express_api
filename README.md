@@ -54,8 +54,8 @@ console.log("Generated Secret Key:", secretKey);
 
 To run this project, you will need to add the following environment variables to your .env file. rename the envExample as .env
 
-`MONGODB_URI=---`
-`SECRET_KEY=---`
+`MONGODB_URI=---URI OF DATABASE---`
+`SECRET_KEY=---SECRET KEY GENERATED---`
 
 ## Run Locally
 
