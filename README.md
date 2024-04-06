@@ -1,34 +1,58 @@
 # Express API
 
-This TypeScript application leverages the Express.js framework to implement a basic CRUD (Create, Read, Update, Delete) API for managing a collection of persons. The application utilizes an in-memory array as a simple database to store person objects, each containing an id, firstName, and lastName. The API exposes endpoints to perform CRUD operations on this collection.
+This TypeScript application leverages the Express.js framework to implement a basic CRUD (Create, Read, Update, Delete) API for managing a collection of persons. The application utilizes MongoDB as its database to store person objects, each containing an id, firstName, and lastName. The API exposes endpoints to perform CRUD operations on this collection.
 
-### Clone the repository
+## Tech Stack
 
-```bash
-git clone https://github.com/Proac-Tee/express_api.git
-```
+[![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+
+[![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+
+[![REST API](https://img.shields.io/badge/REST_API-000000?style=for-the-badge)](https://en.wikipedia.org/wiki/Representational_state_transfer)
+
+[![nodejs](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/en/download)
+
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
 ## Installation
 
-To install this API, follow these steps:
+You need a Node.js runtime installed to run this api locally
 
-_Navigate to the project directory:_
+#### 🔗 Click Link to install Node.js
+
+[![nodejs](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/en/download)
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone git clone https://github.com/Proac-Tee/express_api.git
+```
+
+Go to the project directory
 
 ```bash
   cd express_api
 ```
 
-_Install dependencies using npm:_
+Install dependencies
 
 ```bash
   npm install
 ```
 
-_To start run:_
+Start the server
 
 ```bash
   npm start
 ```
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file. rename the envExample as .env
+
+`MONGODB_URI=---`
 
 ## API Reference
 
