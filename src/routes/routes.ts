@@ -2,14 +2,14 @@ import express from "express";
 import authenticateToken from "../authenticateToken";
 
 import {
-  addNewPerson,
-  deletePerson,
-  getAllPerson,
-  getIndividualPerson,
+  addNewChat,
+  deleteChat,
+  getAllChat,
+  getIndividualChat,
   logOut,
   login,
   signUp,
-  updatePerson,
+  updateChat,
 } from "../controller/controller";
 
 const router = express.Router();
@@ -17,10 +17,10 @@ const router = express.Router();
 const auth = express.Router();
 
 // GET request to fetch all persons
-router.get("/person", getAllPerson);
+router.get("/chat", getAllChat);
 
 // GET request to fetch person details by ID
-router.get("/person/:id", authenticateToken, getIndividualPerson);
+router.get("/chat/:id", authenticateToken, getIndividualChat);
 
 // Generate and return JWT upon successful user sign in authentication
 auth.post("/signup", signUp);
@@ -32,12 +32,12 @@ auth.post("/login", login);
 auth.post("/logout", logOut);
 
 // POST request to create a new person
-router.post("/person/:id", authenticateToken, addNewPerson);
+router.post("/chat/:id", authenticateToken, addNewChat);
 
 // PUT request to update person details by ID
-router.put("/person/:id", authenticateToken, updatePerson);
+router.put("/chat/:id", authenticateToken, updateChat);
 
 // DELETE request to delete person by ID
-router.delete("/person/:id", authenticateToken, deletePerson);
+router.delete("/chat/:id", authenticateToken, deleteChat);
 
 export { router, auth };
