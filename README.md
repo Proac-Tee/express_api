@@ -1,6 +1,6 @@
 # Express API
 
-This TypeScript application leverages the Express.js framework to implement a basic CRUD (Create, Read, Update, Delete) API for managing a collection of persons. The application utilizes MongoDB as its database to store person objects, each containing an id, firstName, and lastName. The API exposes endpoints to perform CRUD operations on this collection.
+This TypeScript application leverages the Express.js framework to implement a basic CRUD (Create, Read, Update, Delete) API for managing a collection of chats. The application utilizes MongoDB as its database to store person objects, each containing an id, chat. The API exposes endpoints to perform CRUD operations on this collection. Italso offers users rregistration by leveraging jwt for authentication, session management, user roles and permissions.
 
 ## Tech Stack
 
@@ -85,20 +85,20 @@ Start the server
 
 ## API Reference
 
-#### Get all persons
+#### Get all chat
 
 ```http
-  GET /api/person
+  GET /api/chat
 ```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | none      | `string` | **Required**. Your API key |
 
-#### Get person by ID
+#### Get chat by ID
 
 ```http
-  GET /api/person/${id}
+  GET /api/chat/${id}
 ```
 
 | Parameter | Type     | Description                       |
@@ -127,35 +127,37 @@ Start the server
 | `email`    | `string` | **Required**. user email    |
 | `password` | `string` | **Required**. user password |
 
-#### Create a new person
+#### Create a new chat
 
 ```http
-  POST /api/person/${id}
+  POST /api/chat/${id}
 ```
 
-| Parameter | Type     | Description                        |
-| :-------- | :------- | :--------------------------------- |
-| `id`      | `string` | **Required**. Id of person to post |
+| Parameter | Type     | Description                      |
+| :-------- | :------- | :------------------------------- |
+| `id`      | `string` | **Required**. Id of chat to post |
+| `chat`    | `string` | **Required**. chat input to post |
 
 #### Update person by ID
 
 ```http
-  PUT /api/person/${id}
+  PUT /api/chat/${id}
 ```
 
-| Parameter | Type     | Description                          |
-| :-------- | :------- | :----------------------------------- |
-| `id`      | `string` | **Required**. Id of person to update |
+| Parameter | Type     | Description                        |
+| :-------- | :------- | :--------------------------------- |
+| `id`      | `string` | **Required**. Id of chat to update |
+| `chat`    | `string` | **Required**. chat input to update |
 
 #### Delete person by ID
 
 ```http
-  DELETE /api/person/${id}
+  DELETE /api/chat/${id}
 ```
 
-| Parameter | Type     | Description                          |
-| :-------- | :------- | :----------------------------------- |
-| `id`      | `string` | **Required**. Id of person to delete |
+| Parameter | Type     | Description                        |
+| :-------- | :------- | :--------------------------------- |
+| `id`      | `string` | **Required**. Id of chat to delete |
 
 ## Usage/Examples
 
@@ -171,13 +173,11 @@ GET / api / person;
 [
   {
     id: 1,
-    firstName: "John",
-    lastName: "Doe",
+    chat: "John",
   },
   {
     id: 2,
-    firstName: "Jane",
-    lastName: "Smith",
+    chat: "Jane",
   },
 ];
 ```
@@ -189,8 +189,7 @@ POST /api/person/3
 Content-Type: application/json
 
 {
-  "firstName": "Alice",
-  "lastName": "Johnson"
+  " chat": "Johnny",
 }
 
 ```
@@ -200,8 +199,7 @@ Content-Type: application/json
 ```javascript
 {
   "id": 3,
-  "firstName": "Alice",
-  "lastName": "Johnson"
+  "chat": "Jonny",
 }
 
 ```
