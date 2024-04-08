@@ -13,7 +13,7 @@ const secretKey = process.env.SECRET_KEY || ""; // Access SECRET_KEY from enviro
 
 const saltRounds = 10;
 
-const maxAge = 14 * 24 * 60 * 60;
+const maxAge = 3 * 24 * 60 * 60;
 
 /**
  * Controller function to get all Chats
@@ -95,12 +95,9 @@ export const signUp = async (request: Request, response: Response) => {
     if (!user) {
       await newUser.save();
 
-      response.cookie("expressApiToken", accessToken, {
-        httpOnly: true,
-        maxAge: maxAge * 1000,
+      response.status(200).json({
+        message: "Sign up successful",
       });
-
-      response.status(200).json({ accessToken });
     } else {
       // If user already exists, respond with 401 status code and error message
       response.status(401).json({ message: "User already exists" });
@@ -151,17 +148,19 @@ export const login = async (request: Request, response: Response) => {
     }
 
     // If passwords match, generate JWT token
-    const accessToken = jwt.sign({ email }, secretKey, {
-      expiresIn: maxAge,
-    });
+    const accessToken = jwt.sign(
+      { email, uid: user.id, username: user.username },
+      secretKey,
+      {
+        expiresIn: maxAge,
+      }
+    );
 
-    response.cookie("expressApiToken", accessToken, {
-      httpOnly: true,
-      maxAge: maxAge * 1000,
+    response.status(200).json({
+      message: "Login successful",
+      accessToken,
+      user: { id: user.id, email: user.email, username: user.username },
     });
-
-    // Respond with 200 status code and JWT token
-    response.status(200).json({ accessToken });
   } catch (error) {
     // Handle any errors that occur during password comparison or token generation
     response
@@ -177,9 +176,16 @@ export const login = async (request: Request, response: Response) => {
  */
 export const logOut = async (request: Request, response: Response) => {
   try {
-    const cookies = request.cookies;
+    const authHeader = request.headers["authorization"];
 
-    if (!cookies?.expressApiToken) return response.sendStatus(204);
+    if (!authHeader?.startsWith("Bearer")) {
+      return response.status(401).json({ message: "Unauthorized Request" });
+    }
+
+    // Extract the token from the Authorization header
+    const cookies = authHeader.split(" ")[1];
+
+    if (!cookies) return response.sendStatus(204);
 
     response.clearCookie("expressApiToken", {
       httpOnly: true,
@@ -199,7 +205,7 @@ export const logOut = async (request: Request, response: Response) => {
  */
 export const addNewChat = async (request: Request, response: Response) => {
   // Extract firstName and lastName from request body
-  const { chat } = request.body;
+  const { chat, addedBy, username } = request.body;
 
   // Validate firstName and lastName presence
   if (!chat) {
@@ -210,6 +216,8 @@ export const addNewChat = async (request: Request, response: Response) => {
   // Create a new Chat document
   const newChat = new Chat({
     chat,
+    addedBy,
+    username,
   });
 
   try {
@@ -279,7 +287,7 @@ export const deleteChat = async (request: Request, response: Response) => {
     if (deleteChat) {
       // Respond with success message if Chat was deleted
       response.status(200).json({
-        message: `Successfully deleted Chat with ID ${id}`,
+        message: `Successfully deleted Chat `,
         deletedChat: deleteChat, // Optionally, you can include the deleted Chat in the response
       });
     } else {

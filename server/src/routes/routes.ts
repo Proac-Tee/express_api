@@ -16,10 +16,10 @@ const router = express.Router();
 
 const auth = express.Router();
 
-// GET request to fetch all persons
+// GET request to fetch all chats
 router.get("/chat", getAllChat);
 
-// GET request to fetch person details by ID
+// GET request to fetch chat details by ID
 router.get("/chat/:id", authenticateToken, getIndividualChat);
 
 // Generate and return JWT upon successful user sign in authentication
@@ -31,13 +31,13 @@ auth.post("/login", login);
 // Destrot JWT  section upon successful user logout authentication
 auth.post("/logout", logOut);
 
-// POST request to create a new person
-router.post("/chat/:id", authenticateToken, addNewChat);
+// POST request to create a new chat
+router.post("/chat", authenticateToken, addNewChat);
 
-// PUT request to update person details by ID
-router.put("/chat/:id", authenticateToken, updateChat);
+// PUT request to update chat details by ID
+router.patch("/chat/:id", authenticateToken, updateChat);
 
-// DELETE request to delete person by ID
+// DELETE request to delete chat by ID
 router.delete("/chat/:id", authenticateToken, deleteChat);
 
 export { router, auth };
