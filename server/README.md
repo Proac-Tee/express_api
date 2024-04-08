@@ -85,6 +85,7 @@ Start the server
 
 ### File structure of important files
 
+```sh
 src/
 ├── authenticateToken.ts
 ├── index.ts
@@ -96,6 +97,7 @@ src/
 └── schema/
 ├── ChatSchema.ts
 └── UserSchema.ts
+```
 
 ## API Reference
 

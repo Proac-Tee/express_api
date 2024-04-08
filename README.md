@@ -36,6 +36,7 @@ This TypeScript application harnesses the power of Express.js framework to creat
 
 ### File struture of important files
 
+```sh
 express_app/
 ├── client/
 │ ├── src/
@@ -63,3 +64,4 @@ express_app/
 │ └── schema/
 │ ├── ChatSchema.ts
 │ └── UserSchema.ts
+```

@@ -46,13 +46,14 @@ Start the server
 
 ### File strucutrue of important files
 
+```sh
 src/
 ├── App.vue
 ├── index.ts
 ├── main.ts
 ├── router.ts
 ├── style.css
-│  
+│
 ├── assets/
 │ └── (static assets)
 └── components/
@@ -60,3 +61,4 @@ src/
 ├── GetStarted.vue
 ├── Login.vue
 └── Messages.vue
+```
