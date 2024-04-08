@@ -68,7 +68,7 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd express_api
+  cd express_api/server
 ```
 
 Install dependencies
@@ -82,6 +82,20 @@ Start the server
 ```bash
   npm start
 ```
+
+### File structure of important files
+
+src/
+├── authenticateToken.ts
+├── index.ts
+├── generateSecretKey.ts
+├── controller/
+│ └── controller.ts
+├── router/
+│ └── routes.ts
+└── schema/
+├── ChatSchema.ts
+└── UserSchema.ts
 
 ## API Reference
 
@@ -130,13 +144,14 @@ Start the server
 #### Create a new chat
 
 ```http
-  POST /api/chat/${id}
+  POST /api/chat
 ```
 
-| Parameter | Type     | Description                      |
-| :-------- | :------- | :------------------------------- |
-| `id`      | `string` | **Required**. Id of chat to post |
-| `chat`    | `string` | **Required**. chat input to post |
+| Parameter  | Type     | Description                                                                                       |
+| :--------- | :------- | :------------------------------------------------------------------------------------------------ |
+| `addedBy`  | `string` | **Required**. uId of user chat to post                                                            |
+| `chat`     | `string` | **Required**. chat input to post                                                                  |
+| `username` | `string` | **Required**. randomly generated username to post if not given a randomly generated one is giving |
 
 #### Update person by ID
 
