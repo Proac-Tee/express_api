@@ -1,4 +1,4 @@
-## Chat form App
+## Chat forum App
 
 This TypeScript application harnesses the power of Express.js framework to create a robust CRUD (Create, Read, Update, Delete) API tailored for managing a collection of chats. MongoDB serves as the backend database, storing person objects, each characterized by an id and chat data. The API provides endpoints for seamless CRUD operations on this collection. Additionally, it incorporates user registration functionality with JWT (JSON Web Token) for secure authentication, session management, and implementation of user roles and permissions. To showcase the API, Vue.js version 3 (Vue 3) was employed.
 
