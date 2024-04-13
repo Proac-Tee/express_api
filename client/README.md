@@ -11,9 +11,7 @@ This template should help get you started developing with Vue 3 and TypeScript i
 ## About the Stack
 
 [![Vue.js](https://img.shields.io/badge/Vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white)](https://vuejs.org/)
-
 [![Vuex](https://img.shields.io/badge/Vuex-42b883?style=for-the-badge&logo=vuex&logoColor=white)](https://vuex.vuejs.org/)
-
 [![Vue Router](https://img.shields.io/badge/Vue_Router-42b883?style=for-the-badge&logo=vue-router&logoColor=white)](https://router.vuejs.org/)
 
 ---
